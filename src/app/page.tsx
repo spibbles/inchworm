@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import {useEffect} from 'react';
+import {useState} from 'react';
 
 export default function Home() {
   // useEffect(() => {
@@ -16,6 +16,8 @@ export default function Home() {
   //   })()
   // }, [])
 
+
+  const [choices, setChoices] = useState([]);
 
   return (
     <main>
@@ -36,13 +38,21 @@ export default function Home() {
           },
           body: JSON.stringify({  
             someData: true,
-          })
+          }),
          });
-         console.log("RESPONSE",response);
+         
+         const result =  await response.json();
+         setChoices(result.choices)
         
       }}
 
       >  API Request</button>
+
+      {choices.map(choice => {
+          return(
+            <p key = {choice.index}>{(choice.message.content)}</p>
+          )
+      })}
       
     </main>
   );
