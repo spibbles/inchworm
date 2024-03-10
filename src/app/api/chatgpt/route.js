@@ -12,17 +12,21 @@ export async function POST(REQUEST){
         apiKey: process.env.OPENAI_API_KEY
     })
 
+    const params = await request.json();
+    //string user passes int
+
+    //passing user input to chatgpt
     const response = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [
             {
                 role:"system",
-                content: "You are a kind friend and assitant trying to help a person with ADHD and executive disfunction accomplish their goals and create a daily schedule. Respond to their tasks by providing them with a schedule and possible plan to acheiving their goals!"
+                content: "You are a kind and gentle friend trying to help a person with ADHD and executive disfunction accomplish their goals and create a daily schedule. Respond to their tasks by providing them with a schedule and possible plan to acheiving their goals! Be kind and understanding of any setbacks"
 
             },
             {
                 role: "user",
-                content: "How do i become better at calculus?"
+                content: params.prompt
             }
         ],
         temperature: 0,
@@ -32,5 +36,6 @@ export async function POST(REQUEST){
         presence_penalty:0,
     })
 
+    //sends responses to frontend
     return NextResponse.json(response);
 }

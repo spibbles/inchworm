@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import {useState} from 'react';
+import PromptForm from "./components/PromptForm";
 
 export default function Home() {
   // useEffect(() => {
@@ -28,7 +29,8 @@ export default function Home() {
         placeholder="Password"
         type="password"></input>
       <a href="/sign-in">Sign in</a> */}
-      <p> Hello!</p>
+      <p> Hello! What're you going to do today friend?</p>
+      <PromptForm />
 
       <button onClick = {async () =>{
          const response = await fetch("/api/chatgpt", {
@@ -37,7 +39,7 @@ export default function Home() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({  
-            someData: true,
+            prompt: "This is the orompt"
           }),
          });
          
