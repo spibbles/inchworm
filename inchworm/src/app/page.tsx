@@ -1,6 +1,14 @@
+// @ts-nocheck
+
 "use client";
+
 import Image from "next/image";
 import {useEffect} from 'react';
+import { auth, db} from "../lib/firebase/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import {signInWithGoogle, signOut} from "../lib/firebase/auth";
+
+
 export default function Home() {
   useEffect(() => {
     (async () => {
@@ -12,17 +20,26 @@ export default function Home() {
         body: JSON.stringify({ messages: 'i like icecream' }),
       })
       return await response.json()
-    })()
+    })( )
   }, [])
+  const handleSubmit = () => {
+    console.log("runs here")
+    signInWithGoogle();
+  }
+
   return (
     <main>
-      <input
+      <form action="" onSubmit={handleSubmit}
+      >
+        <input
         placeholder="Email"
         type="email"></input>
       <input
         placeholder="Password"
         type="password"></input>
-      <a href="/sign-in">Sign in</a>
+      <button type="submit">Sign in</button>
+      </form>
+      
     </main>
   );
 }
