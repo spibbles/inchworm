@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import { NextResponse } from 'next/server'
 
 export default async function chatgpt(
   req: NextApiRequest,
@@ -7,7 +8,7 @@ export default async function chatgpt(
   const { messages } = req.body
   const apiKey = process.env.OPENAI_API_KEY
   const url = 'https://api.openai.com/v1/chat/completions'
-
+  
   const body = JSON.stringify({
     messages,
     model: 'gpt-3.5-turbo',
@@ -25,7 +26,8 @@ export default async function chatgpt(
     })
     const data = await response.json()
     res.status(200).json({ data })
+    console.log(data)
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error })
   }
 }
